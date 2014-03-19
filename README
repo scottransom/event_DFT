@@ -1,0 +1,6 @@
+This is archival code that computes a DFT of event data and performs
+harmonic summing (both incoherent and coherent).  It is highly
+optimized.
+
+Originally written by Scott Ransom, it is released under the GPL.
+sransom@nrao.edu
