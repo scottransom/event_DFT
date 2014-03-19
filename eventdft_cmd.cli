@@ -1,0 +1,41 @@
+#
+# The following is for use with the program CLIG
+#    see http://wsd.iitb.fhg.de/~kir/clighome/ 
+#
+Name eventdft
+Usage {Search the Discrete Fourier Transform of a set of TOAs for periodicities}
+Version [exec date +%Y-%m-%d]
+Commandline all_args
+Flag -days   days   {Events are in days since MJD0 (default is seconds)}
+Flag -mjds   mjds   {Events are in MJDs}
+Flag -double double {Events are in binary double precision (default is ASCII)}
+Flag -iout iout {Send the list of freqs and incoherently summed powers to stdout}
+Flag -cout cout {Send the list of freqs and coherently summed powers to stdout}
+Flag -nocoherent   nocoherent   {Do not sum powers coherently in the search}
+Flag -noincoherent noincoherent {Do not sum powers incoherently in the search}
+Double -fmin fmin {Lowest freq to search (hz)} \
+	-r  0 oo  -d  0.01
+Double -fmax fmax {Highest freq to search (hz)} \
+	-r  0 oo  -d  1000.0
+Double -fdotbyf fdotbyf {Frequency Derivative / Freq to apply to the events before DFTing} \
+	-r  -oo oo
+Double -ifs ifs   {Approx number of independent freqs in search} \
+	-r  0 oo
+Double -mjd0 MJD0 {The fiducial time (in MJD) to use as T0 (default sets T0 to the first event)} \
+	-r  0 oo -d 0.0
+Double -time T     {The total duration in sec to accept events from the input file (default uses all events)} \
+	-r  0 oo -d 0.0
+Double -start startT {The fraction of the way through T (beginning at MJD0) to start looking at events (default is 0.0)} \
+	-r  0 oo -d 0.0
+Double -end   endT   {The fraction of the way through T (beginning at MJD0) to stop looking at events (default is 1.0)} \
+	-r  0 oo -d 1.0
+Double -offset offset {A time offset to add to the 1st event in the same units as the events} \
+        -r -oo oo -d 0.0
+Int -numsum numsum {Maximum number of harmonics to sum} \
+	-r  1 32  -d 8
+Int -osamp osamp {Factor to oversample normal (1/T) Fourier spacing} \
+	-r  1 1000
+Int -ncands ncands {Number of candidates to return} \
+        -r  1 1000 -d 50
+Rest infile {File containing input events.} \
+	-c  1 1

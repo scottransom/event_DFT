@@ -1,0 +1,8 @@
+*.[oa]
+*.so
+*.dylib
+*.pyc
+*~
+.DS_Store
+TAGS
+eventdft
