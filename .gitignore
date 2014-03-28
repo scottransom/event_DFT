@@ -1,8 +1,11 @@
 *.[oa]
 *.so
+*.bak
 *.dylib
 *.pyc
 *~
 .DS_Store
+test.events
+test.out
 TAGS
 eventdft
