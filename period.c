@@ -7,7 +7,8 @@
 static double normconst, totaltime, lofreq, dfreq, maxharmsum;
 static double **coss, **sins, **alph, **beta;
 static fcomplex *amplitudes;
-static int initialized=0, numevents, numfreqs;
+static int initialized=0, numevents;
+static long long numfreqs;
 
 void free_eventdft()
 /* Free the static vectors used by the *_eventdft() routines */
@@ -81,13 +82,13 @@ fcomplex *calc_eventdft_point(double *freq)
     dcomplex result={0.0, 0.0};
     
     (*freq) = lofreq + numfreqs*dfreq;
-    for (ii=0; ii<maxharmsum; ii++){
+    for (ii = 0; ii < maxharmsum; ii++){
         aptr = alph[ii];
         bptr = beta[ii];
         cptr = coss[ii];
         sptr = sins[ii];
         result.r = result.i = 0.0;
-        for (jj=0; jj<numevents; jj++){
+        for (jj = 0; jj < numevents; jj++){
             aa = aptr[jj];
             bb = bptr[jj];
             cc = cptr[jj];
@@ -117,7 +118,7 @@ fcomplex *eventdft(double *events, int numevents,
     
     amps = gen_cvect(numf);
     prep_eventdft(events, numevents, 1, lof, df);
-    for (ii=0; ii<numf; ii++){
+    for (ii = 0; ii < numf; ii++){
         famp = calc_eventdft_point(&freq);
         amps[ii].r = famp->r;
         amps[ii].i = famp->i;
@@ -157,7 +158,7 @@ float *periodogram(double *xx, double *tt, int nn,
     
     /* Scale the times around the midpt */
     ttmax = ttmin = tt[0];
-    for (ii=0; ii<nn; ii++){
+    for (ii = 0; ii < nn; ii++){
         if (tt[ii] > ttmax) ttmax = tt[ii];
         if (tt[ii] < ttmin) ttmin = tt[ii];
     }
@@ -167,7 +168,7 @@ float *periodogram(double *xx, double *tt, int nn,
     /* Generate the trig recurrence values */
     c = cos(TWOPI * lof);
     s = sin(TWOPI * lof);
-    for (ii=0; ii<nn; ii++){
+    for (ii = 0; ii < nn; ii++){
         arg = TWOPI * ((tt[ii] - ttavg) * df);
         wtemp = sin(0.5 * arg);
         wpr[ii] = -2.0 * wtemp * wtemp;
@@ -182,7 +183,7 @@ float *periodogram(double *xx, double *tt, int nn,
     }
     
     /* Calculate the periodogram */
-    for (ii=0; ii<numf; ii++){
+    for (ii = 0; ii < numf; ii++){
         sumsh = sumc = 0.0;
         for (jj=0; jj<nn; jj++){
             c = wr[jj];
@@ -196,7 +197,7 @@ float *periodogram(double *xx, double *tt, int nn,
         sums = sumc = sumsxx = sumcxx = 0.0;
         
         /* Step through the data points */
-        for (jj=0; jj<nn; jj++){
+        for (jj = 0; jj < nn; jj++){
             c = wr[jj];
             s = wi[jj];
             ss = s * cwtau - c * swtau;

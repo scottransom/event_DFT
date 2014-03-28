@@ -34,7 +34,8 @@ int main(int argc, char **argv)
 {
     FILE *iofile;
     char *infilenm, *outfilenm, *cptr;
-    int ii, jj, nn, numevents, numfreqs;
+    int jj, nn, numevents;
+    long long ii, numfreqs;
     double *events, T, dfreq, freq;
     float *isums, *csums, *ithresholds, *cthresholds;
     fcomplex *amplitudes;
@@ -121,19 +122,19 @@ int main(int argc, char **argv)
         /* Correct the events for the fdot we are searching */
         if (cmd->fdotbyfP){
             for (ii=0; ii<numevents; ii++)
-                events[ii] += 0.5*events[ii]*events[ii]*cmd->fdotbyf;
+                events[ii] += 0.5 * events[ii] * events[ii] * cmd->fdotbyf;
         }
     }
     T = events[numevents-1];
     if (!cmd->osampP)
-        cmd->osamp = 2*cmd->numsum;
-    dfreq = 1.0/(T*cmd->osamp);
-    numfreqs = (cmd->fmax-cmd->fmin)/dfreq + 1;
+        cmd->osamp = 2 * cmd->numsum;
+    dfreq = 1.0 / (T * cmd->osamp);
+    numfreqs = (cmd->fmax - cmd->fmin) / dfreq + 1;
     
     /* Calculate the approximate number of independent freqs */
     
     if (!cmd->ifsP)
-        cmd->ifs = (cmd->fmax-cmd->fmin)*T;
+        cmd->ifs = (cmd->fmax - cmd->fmin) * T;
     /* From Horne and Baliunas, ApJ, 302, 757.                  */
     /* This needs to be seriously modified for eventsearches... */
     /* cmd->ifs = -6.362 + 1.193 * numtoas + 0.00098 * numtoas * numtoas */
@@ -157,7 +158,7 @@ int main(int argc, char **argv)
     /* Do the search ... */
     
     prep_eventdft(events, numevents, cmd->numsum, cmd->fmin, dfreq);
-    for (ii=0; ii<numfreqs; ii++){
+    for (ii = 0; ii < numfreqs; ii++){
         /* Calculate the exact DFT at the fundamental and harmonics */
         amplitudes = calc_eventdft_point(&freq);
         if (!cmd->noincoherentP)  /* incoherent sums */
@@ -170,13 +171,13 @@ int main(int argc, char **argv)
                     cmd->numsum, freq, cands, cmd->ncands, cmd->ifs);
         if (cmd->ioutP){
             fprintf(stdout, "%15.10f", freq);
-            for (jj=0; jj<cmd->numsum; jj++)
+            for (jj = 0; jj < cmd->numsum; jj++)
                 fprintf(stdout, "  %10.4f", isums[jj]);
             fprintf(stdout, "\n");
         }
         if (cmd->coutP){
             fprintf(stdout, "%15.10f", freq);
-            for (jj=0; jj<cmd->numsum; jj++)
+            for (jj = 0; jj < cmd->numsum; jj++)
                 fprintf(stdout, "  %10.4f", csums[jj]);
             fprintf(stdout, "\n");
         }
@@ -210,7 +211,7 @@ int main(int argc, char **argv)
     fprintf(iofile, "# Cand     Frequency      Sigma    IPower    CPower   Nharm\n");
     ii = 0;
     while (cands[ii].freq > 0.0 && ii < cmd->ncands){
-        fprintf(iofile, " %-4d  %15.10f  %7.2f   %7.2f   %7.2f  %4d %c\n", 
+        fprintf(iofile, " %-4lld  %15.10f  %7.2f   %7.2f   %7.2f  %4d %c\n", 
                 ii+1, cands[ii].freq, cands[ii].sigma, 
                 cands[ii].ipow, cands[ii].cpow, cands[ii].numharm, 
                 cands[ii].coherentsum?'C':'I');
