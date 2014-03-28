@@ -14,9 +14,6 @@
 #include "utils.h"
 #include "eventdft.h"
 #include "eventdft_cmd.h"
-#ifdef USEDMALLOC
-#include "dmalloc.h"
-#endif
 
 /* Functions at the bottom */
 
