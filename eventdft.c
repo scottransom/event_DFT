@@ -4,7 +4,7 @@
  * level are sorted and placed placed in an '.out' file
  * along with their significance.
  *
- * Copyright 2003, Scott M. Ransom (ransom@physics.mcgill.ca)
+ * Copyright 2014, Scott M. Ransom (sransom@nrao.edu)
  *
  */
 #include <stdlib.h>
@@ -32,8 +32,8 @@ void check_cands(float *isums, float *ithresholds, int skip_incoherent,
 /****************************************************************/
 
 int main(int argc, char **argv)
-/* Written by Scott Ransom in March 2003 based on an earlier */
-/* code from Nov 2000 called 'toafft' that didn't do summing */
+// Based on code written by Scott Ransom in March 2003, which was
+// based on an earlier code called 'toafft' that didn't do summing
 {
   FILE *iofile;
   char *infilenm, *outfilenm, *cptr;
@@ -52,8 +52,8 @@ int main(int argc, char **argv)
     exit(1);
   } else {
     fprintf(stderr, "\n     Event DFT Search Routine\n");
-    fprintf(stderr, "        by Scott M. Ransom\n");
-    fprintf(stderr, "            March 2003\n\n");
+    fprintf(stderr, "       With Harmonic Summing\n");
+    fprintf(stderr, "        by Scott M. Ransom\n\n");
   }
 
   /* Parse the command line using the excellent program Clig */
