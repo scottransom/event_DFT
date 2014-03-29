@@ -23,6 +23,8 @@ typedef struct s_Cmdline {
   char nocoherentP;
   /***** -noincoherent: Do not sum powers incoherently in the search */
   char noincoherentP;
+  /***** -nostatus: Do not print percent complete status to STDOUT */
+  char nostatusP;
   /***** -fmin: Lowest freq to search (hz) */
   char fminP;
   double fmin;

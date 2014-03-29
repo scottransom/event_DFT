@@ -13,6 +13,7 @@ Flag -iout iout {Send the list of freqs and incoherently summed powers to stdout
 Flag -cout cout {Send the list of freqs and coherently summed powers to stdout}
 Flag -nocoherent   nocoherent   {Do not sum powers coherently in the search}
 Flag -noincoherent noincoherent {Do not sum powers incoherently in the search}
+Flag -nostatus nostatus {Do not print percent complete status to STDOUT}
 Double -fmin fmin {Lowest freq to search (hz)} \
 	-r  0 oo  -d  0.01
 Double -fmax fmax {Highest freq to search (hz)} \

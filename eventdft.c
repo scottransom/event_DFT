@@ -17,6 +17,7 @@
 
 /* Functions at the bottom */
 
+static void print_percent_complete(long long current, long long number);
 static int compare_eventdftcands(const void *ca, const void *cb);
 static double percolate_eventdftcand(eventdftcand* list, int nlist);
 static void calc_incoherent_sums(float *isums, fcomplex *amps, int numsum);
@@ -153,12 +154,14 @@ int main(int argc, char **argv)
     fprintf(stderr, "    Max harmonics summed = %d\n", cmd->numsum);
     fprintf(stderr, "     Oversampling factor = %d\n", cmd->osamp);
     fprintf(stderr, "    Candidates to return = %d\n", cmd->ncands);
-    fprintf(stderr, "  Approx # of Ind. Freqs = %.0f\n", cmd->ifs);
+    fprintf(stderr, "  Approx # of Ind. Freqs = %.0f\n\n", cmd->ifs);
     
     /* Do the search ... */
     
     prep_eventdft(events, numevents, cmd->numsum, cmd->fmin, dfreq);
     for (ii = 0; ii < numfreqs; ii++){
+        if (!cmd->nostatusP) print_percent_complete(ii, numfreqs);
+
         /* Calculate the exact DFT at the fundamental and harmonics */
         amplitudes = calc_eventdft_point(&freq);
         if (!cmd->noincoherentP)  /* incoherent sums */
@@ -383,5 +386,18 @@ void check_cands(float *isums, float *ithresholds, int skip_incoherent,
             for (ii=0; ii<numsum; ii++)
                 cthresholds[ii] = coherent_power_for_sigma(minsigma, ii+1, numtrials);
         }
+    }
+}
+
+
+static void print_percent_complete(long long current, long long number)
+{
+    static int newper = 0, oldper = -1;
+    
+    newper = (int) round((double) current / (double) (number) * 100.0);
+    if (newper > oldper) {
+        printf("\rAmount complete = %3d%%", newper);
+        fflush(stdout);
+        oldper = newper;
     }
 }

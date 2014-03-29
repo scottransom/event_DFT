@@ -36,6 +36,8 @@ static Cmdline cmd = {
   /* nocoherentP = */ 0,
   /***** -noincoherent: Do not sum powers incoherently in the search */
   /* noincoherentP = */ 0,
+  /***** -nostatus: Do not print percent complete status to STDOUT */
+  /* nostatusP = */ 0,
   /***** -fmin: Lowest freq to search (hz) */
   /* fminP = */ 1,
   /* fmin = */ 0.01,
@@ -836,6 +838,13 @@ showOptionValues(void)
     printf("-noincoherent found:\n");
   }
 
+  /***** -nostatus: Do not print percent complete status to STDOUT */
+  if( !cmd.nostatusP ) {
+    printf("-nostatus not found.\n");
+  } else {
+    printf("-nostatus found:\n");
+  }
+
   /***** -fmin: Lowest freq to search (hz) */
   if( !cmd.fminP ) {
     printf("-fmin not found.\n");
@@ -994,7 +1003,7 @@ showOptionValues(void)
 void
 usage(void)
 {
-  fprintf(stderr,"%s","   [-days] [-mjds] [-double] [-iout] [-cout] [-nocoherent] [-noincoherent] [-fmin fmin] [-fmax fmax] [-fdotbyf fdotbyf] [-ifs ifs] [-mjd0 MJD0] [-time T] [-start startT] [-end endT] [-offset offset] [-numsum numsum] [-osamp osamp] [-ncands ncands] [--] infile\n");
+  fprintf(stderr,"%s","   [-days] [-mjds] [-double] [-iout] [-cout] [-nocoherent] [-noincoherent] [-nostatus] [-fmin fmin] [-fmax fmax] [-fdotbyf fdotbyf] [-ifs ifs] [-mjd0 MJD0] [-time T] [-start startT] [-end endT] [-offset offset] [-numsum numsum] [-osamp osamp] [-ncands ncands] [--] infile\n");
   fprintf(stderr,"%s","      Search the Discrete Fourier Transform of a set of TOAs for periodicities\n");
   fprintf(stderr,"%s","            -days: Events are in days since MJD0 (default is seconds)\n");
   fprintf(stderr,"%s","            -mjds: Events are in MJDs\n");
@@ -1003,6 +1012,7 @@ usage(void)
   fprintf(stderr,"%s","            -cout: Send the list of freqs and coherently summed powers to stdout\n");
   fprintf(stderr,"%s","      -nocoherent: Do not sum powers coherently in the search\n");
   fprintf(stderr,"%s","    -noincoherent: Do not sum powers incoherently in the search\n");
+  fprintf(stderr,"%s","        -nostatus: Do not print percent complete status to STDOUT\n");
   fprintf(stderr,"%s","            -fmin: Lowest freq to search (hz)\n");
   fprintf(stderr,"%s","                   1 double value between 0 and oo\n");
   fprintf(stderr,"%s","                   default: `0.01'\n");
@@ -1038,7 +1048,7 @@ usage(void)
   fprintf(stderr,"%s","                   default: `50'\n");
   fprintf(stderr,"%s","           infile: File containing input events.\n");
   fprintf(stderr,"%s","                   1 value\n");
-  fprintf(stderr,"%s","  version: 2014-03-19\n");
+  fprintf(stderr,"%s","  version: 2014-03-28\n");
   fprintf(stderr,"%s","  ");
   exit(EXIT_FAILURE);
 }
@@ -1088,6 +1098,11 @@ parseCmdline(int argc, char **argv)
 
     if( 0==strcmp("-noincoherent", argv[i]) ) {
       cmd.noincoherentP = 1;
+      continue;
+    }
+
+    if( 0==strcmp("-nostatus", argv[i]) ) {
+      cmd.nostatusP = 1;
       continue;
     }
 

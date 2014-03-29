@@ -11,7 +11,7 @@
 .\" it edited by clig, remove the respective pair of cligPart-lines.
 .\"
 .\" cligPart TITLE
-.TH "eventdft" 1 "2014-03-19" "Clig-manuals" "Programmer's Manual"
+.TH "eventdft" 1 "2014-03-28" "Clig-manuals" "Programmer's Manual"
 .\" cligPart TITLE end
 
 .\" cligPart NAME
@@ -29,6 +29,7 @@ eventdft \- Search the Discrete Fourier Transform of a set of TOAs for periodici
 [-cout]
 [-nocoherent]
 [-noincoherent]
+[-nostatus]
 [-fmin fmin]
 [-fmax fmax]
 [-fdotbyf fdotbyf]
@@ -60,6 +61,8 @@ Send the list of freqs and coherently summed powers to stdout.
 Do not sum powers coherently in the search.
 .IP -noincoherent
 Do not sum powers incoherently in the search.
+.IP -nostatus
+Do not print percent complete status to STDOUT.
 .IP -fmin
 Lowest freq to search (hz),
 .br
