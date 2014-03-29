@@ -45,7 +45,7 @@ void prep_eventdft(double *events, int numevts, int maxnumharmsum,
     numevents = numevts;
     maxharmsum = maxnumharmsum;
     numfreqs = 0;
-    normconst = 1.0/sqrt((double) numevents);
+    normconst = 1.0 / sqrt((double) numevents);
     lofreq = lof;
     dfreq = df;
     coss = gen_dmatrix(maxharmsum, numevents);
@@ -55,13 +55,14 @@ void prep_eventdft(double *events, int numevts, int maxnumharmsum,
     amplitudes = gen_cvect(maxharmsum);
     totaltime = events[numevents-1] - events[0];
     midtime = 0.5 * totaltime;
-    for (ii=0; ii<maxharmsum; ii++){
-        for (jj=0; jj<numevents; jj++){
+    for (ii = 0; ii < maxharmsum; ii++){
+        for (jj = 0; jj < numevents; jj++){
             time = events[jj] - midtime;
-            delta = -TWOPI*df*(ii+1)*time;
-            theta = -TWOPI*lofreq*(ii+1)*time;
-            temp = sin(0.5*delta);
-            alph[ii][jj] = -2.0*temp*temp;
+            temp = -TWOPI * (ii + 1) * time;
+            delta = temp * df;
+            theta = temp * lofreq;
+            temp = sin(0.5 * delta);
+            alph[ii][jj] = -2.0 * temp * temp;
             beta[ii][jj] = sin(delta);
             coss[ii][jj] = cos(theta);
             sins[ii][jj] = sin(theta);
@@ -81,7 +82,7 @@ fcomplex *calc_eventdft_point(double *freq)
     double aa, bb, cc, ss, *aptr, *bptr, *cptr, *sptr;
     dcomplex result={0.0, 0.0};
     
-    (*freq) = lofreq + numfreqs*dfreq;
+    (*freq) = lofreq + numfreqs * dfreq;
     for (ii = 0; ii < maxharmsum; ii++){
         aptr = alph[ii];
         bptr = beta[ii];
@@ -95,11 +96,11 @@ fcomplex *calc_eventdft_point(double *freq)
             ss = sptr[jj];
             result.r += cc;
             result.i += ss;
-            cptr[jj] = cc*aa - ss*bb + cc;
-            sptr[jj] = ss*aa + cc*bb + ss;
+            cptr[jj] = cc * aa - ss * bb + cc;
+            sptr[jj] = ss * aa + cc * bb + ss;
         }
-        amplitudes[ii].r = result.r*normconst;
-        amplitudes[ii].i = result.i*normconst;
+        amplitudes[ii].r = result.r * normconst;
+        amplitudes[ii].i = result.i * normconst;
     }
     numfreqs++;
     return amplitudes;
@@ -140,7 +141,7 @@ float *periodogram(double *xx, double *tt, int nn,
     float *pows;
     double avg, var, ivar, c, cc, cwtau;
     double s, ss, sumc, sumcxx, sums, sumsh, sumsxx,swtau;
-    double wtau, ttavg, ttdif, ttmax, ttmin;
+    double wtau, ttavg, ttmax, ttmin;
     double arg, wtemp, *xxnorm, *wi, *wpi, *wpr, *wr;
     
     /* Set-up */
@@ -162,7 +163,6 @@ float *periodogram(double *xx, double *tt, int nn,
         if (tt[ii] > ttmax) ttmax = tt[ii];
         if (tt[ii] < ttmin) ttmin = tt[ii];
     }
-    ttdif = ttmax - ttmin;
     ttavg = 0.5 * (ttmax + ttmin);
     
     /* Generate the trig recurrence values */
