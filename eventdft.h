@@ -12,11 +12,11 @@ typedef struct EVENTDFTCAND {
 
 /* period.c */
 void free_eventdft(void);
-void prep_eventdft(double *events, int numevts, int maxnumharmsum, 
+void prep_eventdft(double *events, long numevts, int maxnumharmsum, 
 		   double lof, double df);
 fcomplex *calc_eventdft_point(double *freq);
-fcomplex *eventdft(double *events, int numevents, double lof, 
-		   double df, int numf);
+fcomplex *eventdft(double *events, long numevents, double lof, 
+		   double df, long numf);
 
 /* stats.c */
 double incoherent_cand_sigma(double power, int numsum, double numtrials);

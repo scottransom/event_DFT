@@ -5,6 +5,7 @@
 *.pyc
 *~
 .DS_Store
+build
 test.events
 test.out
 TAGS

@@ -5,7 +5,7 @@ CC = gcc
 #    Select one set.
 
 # LINUX Optimizing:
-CFLAGS = -W -Wall -O3 -msse -msse2 -malign-double
+CFLAGS = -W -Wall -O3 -msse -msse2 -malign-double -fPIC
 # LINUX Debugging:
 #CFLAGS = -Wall -W -ansi -pedantic -ggdb -pg -I. -O2 -mpentiumpro -malign-double
 
@@ -25,7 +25,7 @@ CFLAGS = -W -Wall -O3 -msse -msse2 -malign-double
 #CFLAGS += -DUSE_BLAS
 
 # Objects 
-OBJS = eventdft.o eventdft_cmd.o period.c utils.o stats.o \
+OBJS = eventdft.o eventdft_cmd.o period.o utils.o stats.o \
 	dcdflib.o ipmpar.o
 
 # Set the Date

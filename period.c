@@ -7,7 +7,7 @@
 static double normconst, totaltime, lofreq, dfreq, maxharmsum;
 static double **coss, **sins, **alph, **beta;
 static fcomplex *amplitudes;
-static int initialized=0, numevents;
+static long initialized=0, numevents;
 static long long numfreqs;
 
 void free_eventdft()
@@ -27,7 +27,7 @@ void free_eventdft()
     }
 }
 
-void prep_eventdft(double *events, int numevts, int maxnumharmsum, 
+void prep_eventdft(double *events, long numevts, int maxnumharmsum, 
                    double lof, double df)
 /* Prepare the static variables and vectors for efficient calculation
    of DFT points based on events.  The FT will begin at frequency
@@ -35,7 +35,7 @@ void prep_eventdft(double *events, int numevts, int maxnumharmsum,
    There are 'numevents' input events with times 'events' (s).  Up to
    'maxharmsum' harmonics will be summed.  */
 {
-    int ii, jj;
+    long ii, jj;
     double delta, theta, temp, midtime, time;
     
     if (initialized){
@@ -78,7 +78,7 @@ fcomplex *calc_eventdft_point(double *freq)
    to (dundamental).  prep_eventdft() must have been called to
    initialize the calcs. */
 {
-    int ii, jj;
+    long ii, jj;
     double aa, bb, cc, ss, *aptr, *bptr, *cptr, *sptr;
     dcomplex result={0.0, 0.0};
     
@@ -107,13 +107,13 @@ fcomplex *calc_eventdft_point(double *freq)
 }
 
 
-fcomplex *eventdft(double *events, int numevents, 
-                   double lof, double df, int numf)
+fcomplex *eventdft(double *events, long numevents, 
+                   double lof, double df, long numf)
 /* Return a set of normalized Fourier amplitudes/ calculated using an
    event DFT for a set of 'nn' events 'tt'.  The returned array is
    allocated.  */
 {
-    int ii;
+    long ii;
     double freq;
     fcomplex *famp, *amps;
     
@@ -129,15 +129,15 @@ fcomplex *eventdft(double *events, int numevents,
 }
 
 
-float *periodogram(double *xx, double *tt, int nn, 
-                   double lof, double df, int numf)
+float *periodogram(double *xx, double *tt, long nn, 
+                   double lof, double df, long numf)
 /* Return the normalized Lomb-Scargle Periodogram powers of 'numf'
    frequencies (Hz) from the lowest freq 'lof' upwards by stepsize
    'df'.  There are 'nn' input data points with amplitudes 'xx' and
    times 'tt' (s).  The returned power vector is dynamically
    allocated.  */
 {
-    int ii, jj;
+    long ii, jj;
     float *pows;
     double avg, var, ivar, c, cc, cwtau;
     double s, ss, sumc, sumcxx, sums, sumsh, sumsxx,swtau;
