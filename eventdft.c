@@ -396,7 +396,7 @@ static void print_percent_complete(long long current, long long number)
     
     newper = (int) round((double) current / (double) (number) * 100.0);
     if (newper > oldper) {
-        printf("\rAmount complete = %3d%%", newper);
+        fprintf(stderr, "\rAmount complete = %3d%%", newper);
         fflush(stdout);
         oldper = newper;
     }
